@@ -1,23 +1,24 @@
 const ParseServer = require('parse-server').ParseServer,
-    ParseDashboard = require('parse-dashboard');
+    ParseDashboard = require('parse-dashboard'),
+    config = require('../configuration/index');
 
 const parseServerMiddleware = new ParseServer({
-    databaseURI: 'postgres://postgres:mysecretpassword@localhost:5432/postgres',
+    databaseURI: config.DATABASE_URI,
     //   cloud: '/home/myApp/cloud/main.js', // Absolute path to your Cloud Code
-    appId: 'myAppId',
-    masterKey: 'myMasterKey', // Keep this key secret!
+    appId: config.PARSE_APP_ID,
+    masterKey: config.PARSE_MASTER_KEY,
     //   fileKey: 'optionalFileKey',
-    serverURL: 'http://localhost:1337/parse/server', // Don't forget to change to https if needed
+    serverURL: config.PARSE_SERVER_URL,
     allowClientClassCreation: false
 });
 
 const parseDashboardMiddleware = new ParseDashboard({
     apps: [
         {
-            "serverURL": "http://localhost:1337/parse/server",
-            "appId": "myAppId",
-            "masterKey": "myMasterKey",
-            "appName": "MyApp"
+            serverURL: config.PARSE_SERVER_URL,
+            appId: config.PARSE_APP_ID,
+            masterKey: config.PARSE_MASTER_KEY,
+            appName: "MyApp"
         }
     ]
 }, {
